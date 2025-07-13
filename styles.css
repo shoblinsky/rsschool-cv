@@ -12,7 +12,14 @@ main,
 }
 
 .header {
+    margin-top: 20px;
     text-align: center;
+}
+
+.header__image {
+    display: block;
+    margin: 0 auto 15px;
+    border-radius: 50%;
 }
 
 .header,
