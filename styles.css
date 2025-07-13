@@ -2,22 +2,40 @@ body {
     font-family: "PT Sans", Calibri, Tahoma, sans-serif;
     max-width: 800px;
     margin: 0 auto;
+    padding: 0;
+}
+
+main,
+.nav {
+    margin-right: 25px;
+    margin-left: 25px;
 }
 
 .header {
     text-align: center;
 }
 
-.header__contacts {
+.header,
+.nav,
+section {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #d6d6d6;
+}
+
+
+.header__contacts,
+.nav__list {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
 .header__contacts>li {
-    display: inline;
-    margin: 50px;
+    margin-right: 20px;
     color: #656565;
+    white-space: nowrap;
+    display: inline-block
 }
 
 a:link {
@@ -39,6 +57,18 @@ a:active {
     color: rgb(188, 112, 107)
 }
 
-.header {
-    margin: 25px, 20px, 25px, 20px;
+.footer {
+    display: table;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.footer__github {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.footer_logo {
+    display: table-cell;
+    float: right;
 }
