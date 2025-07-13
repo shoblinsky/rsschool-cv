@@ -1,186 +1,339 @@
+# Vsevolod Timoshenko
+telegram: @domamolchat
 
-# Резюме
-## Всеволод Тимошенко
-## telegram: @domamolchat
-## Краткая информация о себе
-Стремлюсь стать востребованным и нужным (также, несомненно, оплачиваемым) специалистом, дабы иметь материальную базу для преобразования всего хорошего из всего плохого. Таки да.
+## About me
+Hello! I studied law, but I realized it’s not what I want. I want to become a skilled and needed (and, of course, well-paid) specialist to have money for changing bad things into good ones.
 
-*Релевантный* опыт только учебный, *нерелевантный* -- полезен лишь неоплачиваемый. А об оплачиваемом нерелевантном говорить не хочется. Увы.
+I enjoy photography, visually satisfying things, love watching movies, and I’m interested in computer games, 3D, and how 3d stuff used on websites.
 
-## Навыки
+
+
+## Skills
+A small list of my practical skills.
+
 * HTML
 * CSS
 * JavaScript
-    + NodeJS
-	+ Vite
-	+ Pug
-	+ ThreeJS
-	+ GLSL
-## Примеры кода
-- [Гитхаб](github.com/shoblinsky "мой профиль гитхаб")
-- _жёсткий диск toshiba 1000gb_
+* NodeJS
+* Vite
+* Webpack
+* ThreeJS
+* GLSL
+* Git
+* SQL
+
+## Code examples
+- [Git](github.com/shoblinsky "my github profile")
+- _hdd toshiba 1000gb_
 
 ```
-mport * as THREE from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import GUI from 'lil-gui'
-import waterVertexShader from './shaders/water/vertex.glsl'
-import waterFragmentShader from './shaders/water/fragment.glsl'
+import * as THREE from 'three'
+            import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+            import GUI from 'lil-gui'
+            import vertexShader from './shaders/galaxy/vertex.glsl';
+            import fragmentShader from './shaders/galaxy/fragment.glsl';
+            
+            import gsap from 'gsap'
+            
+            const gui = new GUI()
+            
+            
+            const canvas = document.querySelector('canvas.webgl')
+            
+            const scene = new THREE.Scene()
+            const scrollScene = new THREE.Scene()
+            
+            const parameters = {}
+            parameters.count = 200000
+            parameters.size = 0.005
+            parameters.radius = 5
+            parameters.branches = 3
+            parameters.spin = 1
+            parameters.randomness = 0.5
+            parameters.randomnessPower = 3
+            parameters.insideColor = '#5e372b'
+            parameters.outsideColor = '#2d488b'
+            
+            
+            const primParameters = {
+                materialColor: '#060a28'
+            }
+            
+            let geometry = null
+            let material = null
+            let points = null
+            
+            const generateGalaxy = () => {
+                if (points !== null) {
+                    geometry.dispose()
+                    material.dispose()
+                    scene.remove(points)
+                }
+            
+                geometry = new THREE.BufferGeometry()
+            
+                const positions = new Float32Array(parameters.count * 3)
+                const colors = new Float32Array(parameters.count * 3)
+                const scales = new Float32Array(parameters.count * 1)
+                const randomness = new Float32Array(parameters.count * 3)
+            
+                const insideColor = new THREE.Color(parameters.insideColor)
+                const outsideColor = new THREE.Color(parameters.outsideColor)
+            
+                for (let i = 0; i < parameters.count; i++) {
+                    const i3 = i * 3
+            
+                    const radius = Math.random() * parameters.radius
+            
+                    const branchAngle = (i % parameters.branches) / parameters.branches * Math.PI * 2
+            
+            
+                    positions[i3] = Math.cos(branchAngle) * radius
+                    positions[i3 + 1] = 0
+                    positions[i3 + 2] = Math.sin(branchAngle) * radius
+            
+            
+                    const randomX = Math.pow(Math.random(), parameters.randomnessPower) * 
+                    (Math.random() < 0.5 ? 1 : - 1) * parameters.randomness * radius
+                    const randomY = Math.pow(Math.random(), parameters.randomnessPower) * 
+                    (Math.random() < 0.5 ? 1 : - 1) * parameters.randomness * radius
+                    const randomZ = Math.pow(Math.random(), parameters.randomnessPower) * 
+                    (Math.random() < 0.5 ? 1 : - 1) * parameters.randomness * radius
+            
+                    randomness[i3] = randomX
+                    randomness[i3 + 1] = randomY
+                    randomness[i3 + 2] = randomZ
+                    const mixedColor = insideColor.clone()
+                    mixedColor.lerp(outsideColor, radius / parameters.radius)
+            
+                    colors[i3] = mixedColor.r
+                    colors[i3 + 1] = mixedColor.g
+                    colors[i3 + 2] = mixedColor.b
+                    scales[i] = Math.random()
+                }
+            
+                geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+                geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
+                geometry.setAttribute('aScale', new THREE.BufferAttribute(scales, 1))
+                geometry.setAttribute('aRandomness', new THREE.BufferAttribute(randomness, 3))
+                material = new THREE.ShaderMaterial({
+                    blending: THREE.AdditiveBlending,
+                    depthWrite: false,
+                    depthTest: true,
+                    blending: THREE.AdditiveBlending,
+                    vertexColors: true,
+                    uniforms:
+                    {
+                        uTime: { value: 0 },
+                        uSize: { value: 30 * renderer.getPixelRatio() },
+                    },
+                    vertexShader: vertexShader,
+                    fragmentShader: fragmentShader,
+                    /*Math.min(window.devicePixelRatio, 2)*/
+            
+                })
+            
+                points = new THREE.Points(geometry, material)
+                scene.add(points)
+            }
+            
+            
+            const meshMaterial = new THREE.MeshToonMaterial({
+                color: primParameters.materialColor,
+                // gradientMap: gradientTexture
+            })
+            
+            
+            const mesh1 = new THREE.Mesh(
+                new THREE.TorusGeometry(1, 0.4, 16, 60),
+                meshMaterial
+            )
+            const mesh2 = new THREE.Mesh(
+                new THREE.ConeGeometry(1, 2, 32),
+                meshMaterial
+            )
+            const mesh3 = new THREE.Mesh(
+                new THREE.TorusKnotGeometry(0.8, 0.35, 100, 16),
+                meshMaterial
+            )
+            
+            scrollScene.add(mesh1, mesh2, mesh3)
+            
+            const objectsDistance = 4
+            
+            mesh1.position.x = 2
+            mesh2.position.x = - 2
+            mesh3.position.x = 2
+            
+            mesh1.position.y = - objectsDistance * 0
+            mesh2.position.y = - objectsDistance * 1
+            mesh3.position.y = - objectsDistance * 2
+            
+            scrollScene.add(mesh1, mesh2, mesh3)
+            
+            const sectionMeshes = [mesh1, mesh2, mesh3]
+            const directionalLight = new THREE.DirectionalLight('#ffffff', 3)
+            directionalLight.position.set(1, 1, 0)
+            scrollScene.add(directionalLight)
+            
+            
+            
+            
+            
+            const galaxyFolder = gui.addFolder('Folder for galaxy background');
+            galaxyFolder.add(parameters, 'count').min(100).max(1000000)
+            .step(100).onFinishChange(generateGalaxy)
+            galaxyFolder.add(parameters, 'radius').min(0.01).max(20)
+            .step(0.01).onFinishChange(generateGalaxy)
+            galaxyFolder.add(parameters, 'branches').min(2).max(20)
+            .step(1).onFinishChange(generateGalaxy)
+            galaxyFolder.add(parameters, 'randomness').min(0).max(2)
+            .step(0.001).onFinishChange(generateGalaxy)
+            galaxyFolder.add(parameters, 'randomnessPower').min(1).max(10)
+            .step(0.001).onFinishChange(generateGalaxy)
+            galaxyFolder.addColor(parameters, 'insideColor')
+            .onFinishChange(generateGalaxy)
+            galaxyFolder.addColor(parameters, 'outsideColor')
+            .onFinishChange(generateGalaxy)
+            
+            const primFolder = gui.addFolder('Folder for primitives');
+            primFolder
+                .addColor(primParameters, 'materialColor')
+                .onChange(() => {
+                    meshMaterial.color.set(primParameters.materialColor)
+                })
+            
+            
+            const sizes = {
+                width: window.innerWidth,
+                height: window.innerHeight
+            }
+            
+            window.addEventListener('resize', () => {
 
-/**
- * Base
- */
-// Debug
-const gui = new GUI({ width: 340 })
-const debugObject = {}
-
-// Canvas
-const canvas = document.querySelector('canvas.webgl')
-
-// Scene
-const scene = new THREE.Scene()
-
-// // Axes helper
-// const axesHelper = new THREE.AxesHelper()
-// axesHelper.position.y += 0.25;
-// scene.add(axesHelper)
-
-/**
- * Water
- */
-// Geometry
-const waterGeometry = new THREE.PlaneGeometry(2, 2, 512, 512)
-
-// Colors
-debugObject.depthColor = '#ff4000'
-debugObject.surfaceColor = '#151c37'
-
-gui.addColor(debugObject, 'depthColor').onChange(() => { waterMaterial.uniforms.uDepthColor.value.set(debugObject.depthColor) })
-gui.addColor(debugObject, 'surfaceColor').onChange(() => { waterMaterial.uniforms.uSurfaceColor.value.set(debugObject.surfaceColor) })
-
-// Material
-const waterMaterial = new THREE.ShaderMaterial({
-    vertexShader: waterVertexShader,
-    fragmentShader: waterFragmentShader,
-    uniforms:
-    {
-        uTime: { value: 0 },
-        
-        uBigWavesElevation: { value: 0.2 },
-        uBigWavesFrequency: { value: new THREE.Vector2(4, 1.5) },
-        uBigWavesSpeed: { value: 0.75 },
-
-        uSmallWavesElevation: { value: 0.15 },
-        uSmallWavesFrequency: { value: 3 },
-        uSmallWavesSpeed: { value: 0.2 },
-        uSmallIterations: { value: 4 },
-
-        uDepthColor: { value: new THREE.Color(debugObject.depthColor) },
-        uSurfaceColor: { value: new THREE.Color(debugObject.surfaceColor) },
-        uColorOffset: { value: 0.925 },
-        uColorMultiplier: { value: 1 }
-    }
-})
-
-gui.add(waterMaterial.uniforms.uBigWavesElevation, 'value').min(0).max(1).step(0.001).name('uBigWavesElevation')
-gui.add(waterMaterial.uniforms.uBigWavesFrequency.value, 'x').min(0).max(10).step(0.001).name('uBigWavesFrequencyX')
-gui.add(waterMaterial.uniforms.uBigWavesFrequency.value, 'y').min(0).max(10).step(0.001).name('uBigWavesFrequencyY')
-gui.add(waterMaterial.uniforms.uBigWavesSpeed, 'value').min(0).max(4).step(0.001).name('uBigWavesSpeed')
-
-
-gui.add(waterMaterial.uniforms.uSmallWavesElevation, 'value').min(0).max(1).step(0.001).name('uSmallWavesElevation')
-gui.add(waterMaterial.uniforms.uSmallWavesFrequency, 'value').min(0).max(30).step(0.001).name('uSmallWavesFrequency')
-gui.add(waterMaterial.uniforms.uSmallWavesSpeed, 'value').min(0).max(4).step(0.001).name('uSmallWavesSpeed')
-gui.add(waterMaterial.uniforms.uSmallIterations, 'value').min(0).max(5).step(1).name('uSmallIterations')
-
-gui.add(waterMaterial.uniforms.uColorOffset, 'value').min(0).max(1).step(0.001).name('uColorOffset')
-gui.add(waterMaterial.uniforms.uColorMultiplier, 'value').min(0).max(10).step(0.001).name('uColorMultiplier')
-
-// Mesh
-const water = new THREE.Mesh(waterGeometry, waterMaterial)
-water.rotation.x = - Math.PI * 0.5
-scene.add(water)
-
-/**
- * Sizes
- */
-const sizes = {
-    width: window.innerWidth,
-    height: window.innerHeight
-}
-
-window.addEventListener('resize', () =>
-{
-    // Update sizes
-    sizes.width = window.innerWidth
-    sizes.height = window.innerHeight
-
-    // Update camera
-    camera.aspect = sizes.width / sizes.height
-    camera.updateProjectionMatrix()
-
-    // Update renderer
-    renderer.setSize(sizes.width, sizes.height)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-})
-
-/**
- * Camera
- */
-// Base camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.set(1, 1, 1)
-scene.add(camera)
-
-// Controls
-const controls = new OrbitControls(camera, canvas)
-controls.enableDamping = true
-
-/**
- * Renderer
- */
-const renderer = new THREE.WebGLRenderer({
-    canvas: canvas
-})
-renderer.toneMapping = THREE.ACESFilmicToneMapping
-renderer.setSize(sizes.width, sizes.height)
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-
-/**
- * Animate
- */
-const clock = new THREE.Clock()
-
-const tick = () =>
-{
-    const elapsedTime = clock.getElapsedTime()
-
-    // Water
-    waterMaterial.uniforms.uTime.value = elapsedTime
-
-    // Update controls
-    controls.update()
-
-    // Render
-    renderer.render(scene, camera)
-
-    // Call tick again on the next frame
-    window.requestAnimationFrame(tick)
-}
-
-tick()
+                sizes.width = window.innerWidth
+                sizes.height = window.innerHeight
+            
+                camera.aspect = sizes.width / sizes.height
+                camera.updateProjectionMatrix()
+            
+                renderer.setSize(sizes.width, sizes.height)
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+            })
+            
+            
+            const cameraGroup = new THREE.Group()
+            scrollScene.add(cameraGroup)
+            
+            const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
+            camera.position.x = 4
+            camera.position.y = 1
+            camera.position.z = 0
+            
+            cameraGroup.add(camera)
+            
+            
+            
+            const controls = new OrbitControls(camera, canvas)
+            controls.enableDamping = true
+            // controls.enable = false
+            
+            const renderer = new THREE.WebGLRenderer({
+                canvas: canvas,
+                alpha: false
+            
+            })
+            
+            renderer.setSize(sizes.width, sizes.height)
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+            
+            let scrollY = window.scrollY
+            let currentSection = 0
+            
+            window.addEventListener('scroll', () => {
+                scrollY = window.scrollY
+                const newSection = Math.round(scrollY / sizes.height)
+            
+                if (newSection != currentSection) {
+                    currentSection = newSection
+                    console.log('changed', currentSection)
+            
+                    gsap.to(
+                        sectionMeshes[currentSection].rotation,
+                        {
+                            duration: 1.5,
+                            ease: 'power2.inOut',
+                            x: '+=6',
+                            y: '+=3',
+                            z: '+=1.5'
+                        }
+                    )
+                }
+            })
+            
+            const cursor = {}
+            cursor.x = 0
+            cursor.y = 0
+            
+            window.addEventListener('mousemove', (event) => {
+                cursor.x = event.clientX / sizes.width - 0.5
+                cursor.y = event.clientY / sizes.height - 0.5
+            })
+            
+            
+            
+            
+            const clock = new THREE.Clock()
+            let previousTime = 0
+            
+            const tick = () => {
+                const elapsedTime = clock.getElapsedTime() + 300
+                material.uniforms.uTime.value = elapsedTime
+            
+                const deltaTime = elapsedTime - previousTime
+                previousTime = elapsedTime
+            
+            
+            
+                camera.position.y = - scrollY / sizes.height * objectsDistance
+            
+                const parallaxX = cursor.x * 0.5
+                const parallaxY = - cursor.y * 0.5
+                cameraGroup.position.x += (parallaxX - cameraGroup.position.x) * 5 * deltaTime
+                cameraGroup.position.y += (parallaxY - cameraGroup.position.y) * 5 * deltaTime
+            
+                for (const mesh of sectionMeshes) {
+                    mesh.rotation.x += deltaTime * 0.1
+                    mesh.rotation.y += deltaTime * 0.12
+                }
+            
+            
+                controls.update()
+            
+            
+                renderer.render(scrollScene, camera);
+                renderer.render(scene, camera);
+            
+            
+                window.requestAnimationFrame(tick)
+            }
+            generateGalaxy()
+            tick()
 
 ```
-_здесь нет шейдеров, а также шума перлина_
 
-## Опыт
-попыт
-релевентного нет, учебный на гитхабе (большая часть не опубликована и лежит на харде)
+## Experience
+I don't have relevant work experience, only experience from studying.
 
-## Образование
-Уральский государственный юридический университет
-Томский государственный университет
-ThreeJS journey 
+## Education
+My primary degree is Bachelor's Degree of Ural State Law University.
 
-## Английский язык
-Давно не практиковался. Сейчас оцениваю на B1. 
+I also studied at
+
+Tomsk State University – Digital Law
+Hexlet – Code Basics (Foundation course)
+Yandex Academy – Foundation Course
+Bruno Simon – Three.js Journey
+
+## English level
+I haven't practiced writing intentionally for a long time, so I'd rate myself between A2 and B1. My comprehension skills are stronger than my listening and writing abilities.
