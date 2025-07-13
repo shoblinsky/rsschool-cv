@@ -67,56 +67,351 @@ CV содержит:
     <main class="main">
         <section class="about" id="about">
             <h2>About me</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus, voluptatem eum! Iusto nam at mollitia
-                soluta, ipsam qui magnam ea modi dolore? Animi suscipit dolorum exercitationem asperiores ipsa placeat
-                mollitia. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus, dicta. Odit harum modi
-                est cum perspiciatis praesentium quas animi voluptas nulla, fugit officiis aliquid cumque quam ad minima
-                totam eum.</p>
+            <p>Hello! I studied law, but I realized it’s not what I want. I want to become a skilled and needed (and, of
+                course, well-paid) specialist to have money for changing bad things into good ones.</p>
+            <p> I enjoy photography,
+                visually satisfying things, love watching movies, and I’m interested in computer games, 3D, and how 3d
+                stuff used on websites.</p>
         </section>
         <section class="skills" id="skills">
             <h2>Skills</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus, voluptatem eum! Iusto nam at mollitia
-                soluta, ipsam qui magnam ea modi dolore? Animi suscipit dolorum exercitationem asperiores ipsa placeat
-                mollitia. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus, dicta. Odit harum modi
-                est cum perspiciatis praesentium quas animi voluptas nulla, fugit officiis aliquid cumque quam ad minima
-                totam eum.</p>
+            <p>A small list of my practical skills.</p>
+            <ul class="skills__list">
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+                <li>NodeJS</li>
+                <li>Vite</li>
+                <li>Webpack</li>
+                <li>ThreeJS</li>
+                <li>GLSL</li>
+                <li>Git</li>
+                <li>SQL</li>
+            </ul>
+
         </section>
         <section class="examples" id="code">
             <h2>Code examples</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus, voluptatem eum! Iusto nam at mollitia
-                soluta, ipsam qui magnam ea modi dolore? Animi suscipit dolorum exercitationem asperiores ipsa placeat
-                mollitia. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus, dicta. Odit harum modi
-                est cum perspiciatis praesentium quas animi voluptas nulla, fugit officiis aliquid cumque quam ad minima
-                totam eum.</p>
+            <pre class="code__example"><code>
+            import * as THREE from 'three'
+            import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+            import GUI from 'lil-gui'
+            import vertexShader from './shaders/galaxy/vertex.glsl';
+            import fragmentShader from './shaders/galaxy/fragment.glsl';
+            
+            import gsap from 'gsap'
+            
+            const gui = new GUI()
+            
+            
+            const canvas = document.querySelector('canvas.webgl')
+            
+            const scene = new THREE.Scene()
+            const scrollScene = new THREE.Scene()
+            
+            const parameters = {}
+            parameters.count = 200000
+            parameters.size = 0.005
+            parameters.radius = 5
+            parameters.branches = 3
+            parameters.spin = 1
+            parameters.randomness = 0.5
+            parameters.randomnessPower = 3
+            parameters.insideColor = '#5e372b'
+            parameters.outsideColor = '#2d488b'
+            
+            
+            const primParameters = {
+                materialColor: '#060a28'
+            }
+            
+            let geometry = null
+            let material = null
+            let points = null
+            
+            const generateGalaxy = () => {
+                if (points !== null) {
+                    geometry.dispose()
+                    material.dispose()
+                    scene.remove(points)
+                }
+            
+                geometry = new THREE.BufferGeometry()
+            
+                const positions = new Float32Array(parameters.count * 3)
+                const colors = new Float32Array(parameters.count * 3)
+                const scales = new Float32Array(parameters.count * 1)
+                const randomness = new Float32Array(parameters.count * 3)
+            
+                const insideColor = new THREE.Color(parameters.insideColor)
+                const outsideColor = new THREE.Color(parameters.outsideColor)
+            
+                for (let i = 0; i < parameters.count; i++) {
+                    const i3 = i * 3
+            
+                    const radius = Math.random() * parameters.radius
+            
+                    const branchAngle = (i % parameters.branches) / parameters.branches * Math.PI * 2
+            
+            
+                    positions[i3] = Math.cos(branchAngle) * radius
+                    positions[i3 + 1] = 0
+                    positions[i3 + 2] = Math.sin(branchAngle) * radius
+            
+            
+                    const randomX = Math.pow(Math.random(), parameters.randomnessPower) * 
+                    (Math.random() < 0.5 ? 1 : - 1) * parameters.randomness * radius
+                    const randomY = Math.pow(Math.random(), parameters.randomnessPower) * 
+                    (Math.random() < 0.5 ? 1 : - 1) * parameters.randomness * radius
+                    const randomZ = Math.pow(Math.random(), parameters.randomnessPower) * 
+                    (Math.random() < 0.5 ? 1 : - 1) * parameters.randomness * radius
+            
+                    randomness[i3] = randomX
+                    randomness[i3 + 1] = randomY
+                    randomness[i3 + 2] = randomZ
+                    const mixedColor = insideColor.clone()
+                    mixedColor.lerp(outsideColor, radius / parameters.radius)
+            
+                    colors[i3] = mixedColor.r
+                    colors[i3 + 1] = mixedColor.g
+                    colors[i3 + 2] = mixedColor.b
+                    scales[i] = Math.random()
+                }
+            
+                geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+                geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
+                geometry.setAttribute('aScale', new THREE.BufferAttribute(scales, 1))
+                geometry.setAttribute('aRandomness', new THREE.BufferAttribute(randomness, 3))
+                material = new THREE.ShaderMaterial({
+                    blending: THREE.AdditiveBlending,
+                    depthWrite: false,
+                    depthTest: true,
+                    blending: THREE.AdditiveBlending,
+                    vertexColors: true,
+                    uniforms:
+                    {
+                        uTime: { value: 0 },
+                        uSize: { value: 30 * renderer.getPixelRatio() },
+                    },
+                    vertexShader: vertexShader,
+                    fragmentShader: fragmentShader,
+                    /*Math.min(window.devicePixelRatio, 2)*/
+            
+                })
+            
+                points = new THREE.Points(geometry, material)
+                scene.add(points)
+            }
+            
+            
+            const meshMaterial = new THREE.MeshToonMaterial({
+                color: primParameters.materialColor,
+                // gradientMap: gradientTexture
+            })
+            
+            
+            const mesh1 = new THREE.Mesh(
+                new THREE.TorusGeometry(1, 0.4, 16, 60),
+                meshMaterial
+            )
+            const mesh2 = new THREE.Mesh(
+                new THREE.ConeGeometry(1, 2, 32),
+                meshMaterial
+            )
+            const mesh3 = new THREE.Mesh(
+                new THREE.TorusKnotGeometry(0.8, 0.35, 100, 16),
+                meshMaterial
+            )
+            
+            scrollScene.add(mesh1, mesh2, mesh3)
+            
+            const objectsDistance = 4
+            
+            mesh1.position.x = 2
+            mesh2.position.x = - 2
+            mesh3.position.x = 2
+            
+            mesh1.position.y = - objectsDistance * 0
+            mesh2.position.y = - objectsDistance * 1
+            mesh3.position.y = - objectsDistance * 2
+            
+            scrollScene.add(mesh1, mesh2, mesh3)
+            
+            const sectionMeshes = [mesh1, mesh2, mesh3]
+            const directionalLight = new THREE.DirectionalLight('#ffffff', 3)
+            directionalLight.position.set(1, 1, 0)
+            scrollScene.add(directionalLight)
+            
+            
+            
+            
+            
+            const galaxyFolder = gui.addFolder('Folder for galaxy background');
+            galaxyFolder.add(parameters, 'count').min(100).max(1000000)
+            .step(100).onFinishChange(generateGalaxy)
+            galaxyFolder.add(parameters, 'radius').min(0.01).max(20)
+            .step(0.01).onFinishChange(generateGalaxy)
+            galaxyFolder.add(parameters, 'branches').min(2).max(20)
+            .step(1).onFinishChange(generateGalaxy)
+            galaxyFolder.add(parameters, 'randomness').min(0).max(2)
+            .step(0.001).onFinishChange(generateGalaxy)
+            galaxyFolder.add(parameters, 'randomnessPower').min(1).max(10)
+            .step(0.001).onFinishChange(generateGalaxy)
+            galaxyFolder.addColor(parameters, 'insideColor')
+            .onFinishChange(generateGalaxy)
+            galaxyFolder.addColor(parameters, 'outsideColor')
+            .onFinishChange(generateGalaxy)
+            
+            const primFolder = gui.addFolder('Folder for primitives');
+            primFolder
+                .addColor(primParameters, 'materialColor')
+                .onChange(() => {
+                    meshMaterial.color.set(primParameters.materialColor)
+                })
+            
+            
+            const sizes = {
+                width: window.innerWidth,
+                height: window.innerHeight
+            }
+            
+            window.addEventListener('resize', () => {
+
+                sizes.width = window.innerWidth
+                sizes.height = window.innerHeight
+            
+                camera.aspect = sizes.width / sizes.height
+                camera.updateProjectionMatrix()
+            
+                renderer.setSize(sizes.width, sizes.height)
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+            })
+            
+            
+            const cameraGroup = new THREE.Group()
+            scrollScene.add(cameraGroup)
+            
+            const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
+            camera.position.x = 4
+            camera.position.y = 1
+            camera.position.z = 0
+            
+            cameraGroup.add(camera)
+            
+            
+            
+            const controls = new OrbitControls(camera, canvas)
+            controls.enableDamping = true
+            // controls.enable = false
+            
+            const renderer = new THREE.WebGLRenderer({
+                canvas: canvas,
+                alpha: false
+            
+            })
+            
+            renderer.setSize(sizes.width, sizes.height)
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+            
+            let scrollY = window.scrollY
+            let currentSection = 0
+            
+            window.addEventListener('scroll', () => {
+                scrollY = window.scrollY
+                const newSection = Math.round(scrollY / sizes.height)
+            
+                if (newSection != currentSection) {
+                    currentSection = newSection
+                    console.log('changed', currentSection)
+            
+                    gsap.to(
+                        sectionMeshes[currentSection].rotation,
+                        {
+                            duration: 1.5,
+                            ease: 'power2.inOut',
+                            x: '+=6',
+                            y: '+=3',
+                            z: '+=1.5'
+                        }
+                    )
+                }
+            })
+            
+            const cursor = {}
+            cursor.x = 0
+            cursor.y = 0
+            
+            window.addEventListener('mousemove', (event) => {
+                cursor.x = event.clientX / sizes.width - 0.5
+                cursor.y = event.clientY / sizes.height - 0.5
+            })
+            
+            
+            
+            
+            const clock = new THREE.Clock()
+            let previousTime = 0
+            
+            const tick = () => {
+                const elapsedTime = clock.getElapsedTime() + 300
+                material.uniforms.uTime.value = elapsedTime
+            
+                const deltaTime = elapsedTime - previousTime
+                previousTime = elapsedTime
+            
+            
+            
+                camera.position.y = - scrollY / sizes.height * objectsDistance
+            
+                const parallaxX = cursor.x * 0.5
+                const parallaxY = - cursor.y * 0.5
+                cameraGroup.position.x += (parallaxX - cameraGroup.position.x) * 5 * deltaTime
+                cameraGroup.position.y += (parallaxY - cameraGroup.position.y) * 5 * deltaTime
+            
+                for (const mesh of sectionMeshes) {
+                    mesh.rotation.x += deltaTime * 0.1
+                    mesh.rotation.y += deltaTime * 0.12
+                }
+            
+            
+                controls.update()
+            
+            
+                renderer.render(scrollScene, camera);
+                renderer.render(scene, camera);
+            
+            
+                window.requestAnimationFrame(tick)
+            }
+            generateGalaxy()
+            tick()
+        </code></pre>
         </section>
         <section class="experience" id="experience">
             <h2>Experience</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus, voluptatem eum! Iusto nam at mollitia
-                soluta, ipsam qui magnam ea modi dolore? Animi suscipit dolorum exercitationem asperiores ipsa placeat
-                mollitia. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus, dicta. Odit harum modi
-                est cum perspiciatis praesentium quas animi voluptas nulla, fugit officiis aliquid cumque quam ad minima
-                totam eum.</p>
+            <p>I don't have relevant work experience, only experience from studying.</p>
         </section>
         <section class="education" id="education">
             <h2>Education</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus, voluptatem eum! Iusto nam at mollitia
-                soluta, ipsam qui magnam ea modi dolore? Animi suscipit dolorum exercitationem asperiores ipsa placeat
-                mollitia. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus, dicta. Odit harum modi
-                est cum perspiciatis praesentium quas animi voluptas nulla, fugit officiis aliquid cumque quam ad minima
-                totam eum.</p>
+            <p>My primary degree is Bachelor's Degree of Ural State Law University.</p>
+            <p>I also studied at</p>
+            <ul class="education__list">
+                <li>Tomsk State University – Digital Law</li>
+                <li>Hexlet – Code Basics (Foundation course)</li>
+                <li>Yandex Academy – Foundation Course</li>
+                <li>Bruno Simon – Three.js Journey</li>
+            </ul>
+
         </section>
         <section class="english" id="english">
             <h2>English level</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus, voluptatem eum! Iusto nam at mollitia
-                soluta, ipsam qui magnam ea modi dolore? Animi suscipit dolorum exercitationem asperiores ipsa placeat
-                mollitia. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus, dicta. Odit harum modi
-                est cum perspiciatis praesentium quas animi voluptas nulla, fugit officiis aliquid cumque quam ad minima
-                totam eum.</p>
+            <p>I haven't practiced writing intentionally for a long time, so I'd rate myself between A2 and B1. My
+                comprehension skills are stronger than my listening and writing abilities.</p>
         </section>
     </main>
     <footer class="footer">
 
-        <p class="footer__github"> 2025 Vsevolod Timoshenko</p>
+        <p class="footer__github"> <a href="https://github.com/shoblinsky">2025 Vsevolod Timoshenko</a></p>
         <img class="footer_logo" alt="RSS-logo" width="32" height="32" style="color:transparent"
             src="https://rs.school/_next/static/media/rss-logo.c19ce1b4.svg">
 

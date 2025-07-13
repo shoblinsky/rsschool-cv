@@ -25,7 +25,9 @@ section {
 
 
 .header__contacts,
-.nav__list {
+.nav__list,
+.skills__list,
+.education__list {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -36,6 +38,15 @@ section {
     color: #656565;
     white-space: nowrap;
     display: inline-block
+}
+
+.skills__list {
+    font-style: italic;
+}
+
+.code__example {
+    background-color: #f1f1f1;
+    font-style: italic;
 }
 
 a:link {
