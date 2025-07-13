@@ -3,5 +3,40 @@ body {
 }
 
 .header {
+    text-align: center;
+}
+
+.header__contacts {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.header__contacts>li {
+    display: inline;
+    margin: 50px;
+    color: #656565;
+}
+
+a:link {
+    text-decoration: none;
+    font-style: italic;
+    color: #656565;
+}
+
+a:visited {
+    color: #2d2d2d;
+    text-decoration: none;
+}
+
+a:hover {
+    color: rgb(168, 134, 92)
+}
+
+a:active {
+    color: rgb(188, 112, 107)
+}
+
+.header {
     margin: 25px, 20px, 25px, 20px;
 }
