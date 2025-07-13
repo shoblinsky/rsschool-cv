@@ -1,4 +1,3 @@
-_https://shoblinsky.github.io/rsschool-cv/_
 
 # Резюме
 ## Всеволод Тимошенко
