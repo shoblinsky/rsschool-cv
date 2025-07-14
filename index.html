@@ -116,7 +116,7 @@
                 const insideColor = new THREE.Color(parameters.insideColor)
                 const outsideColor = new THREE.Color(parameters.outsideColor)
             
-                for (let i = 0; i < parameters.count; i++) {
+                for (let i = 0; i &lt; parameters.count; i++) {
                     const i3 = i * 3
             
                     const radius = Math.random() * parameters.radius
@@ -130,11 +130,11 @@
             
             
                     const randomX = Math.pow(Math.random(), parameters.randomnessPower) * 
-                    (Math.random() < 0.5 ? 1 : - 1) * parameters.randomness * radius
+                    (Math.random() &lt; 0.5 ? 1 : - 1) * parameters.randomness * radius
                     const randomY = Math.pow(Math.random(), parameters.randomnessPower) * 
-                    (Math.random() < 0.5 ? 1 : - 1) * parameters.randomness * radius
+                    (Math.random() &lt; 0.5 ? 1 : - 1) * parameters.randomness * radius
                     const randomZ = Math.pow(Math.random(), parameters.randomnessPower) * 
-                    (Math.random() < 0.5 ? 1 : - 1) * parameters.randomness * radius
+                    (Math.random() &lt; 0.5 ? 1 : - 1) * parameters.randomness * radius
             
                     randomness[i3] = randomX
                     randomness[i3 + 1] = randomY
@@ -382,8 +382,9 @@
     <footer class="footer">
 
         <p class="footer__github"> <a href="https://github.com/shoblinsky">2025 Vsevolod Timoshenko</a></p>
-        <img class="footer_logo" alt="RSS-logo" width="32" height="32" style="color:transparent"
-            src="https://rs.school/_next/static/media/rss-logo.c19ce1b4.svg">
+        <a href="https://rs.school/courses/javascript-ru"><img class="footer_logo" alt="RSS-logo" width="64" height="64"
+                style="color:transparent"
+                src="https://raw.githubusercontent.com/rolling-scopes-school/tasks/1b21088a7589864df985e3caa62a513dad85d772/tasks/cv/rs-school-logo.svg"></a>
 
     </footer>
 </body>
