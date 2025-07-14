@@ -54,6 +54,8 @@ section {
 .code__example {
     background-color: #f1f1f1;
     font-style: italic;
+    word-wrap: break-word;
+    white-space: pre-wrap;
 }
 
 a:link {
