@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vsevolod Timoshenko — CV — RSSchool </title>
     <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
     <header class="header">
         <img src="https://thumbs2.imgbox.com/99/02/UySr2YdP_t.png" alt="user image" class="header__image">
@@ -65,12 +63,8 @@
                     // Update sizes
                     sizes.width = window.innerWidth
                     sizes.height = window.innerHeight
-                
-                    // Update camera
                     camera.aspect = sizes.width / sizes.height
                     camera.updateProjectionMatrix()
-                
-                    // Update renderer
                     renderer.setSize(sizes.width, sizes.height)
                     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
                 })
@@ -109,5 +103,4 @@
                 src="https://raw.githubusercontent.com/rolling-scopes-school/tasks/1b21088a7589864df985e3caa62a513dad85d772/tasks/cv/rs-school-logo.svg"></a>
     </footer>
 </body>
-
 </html>
