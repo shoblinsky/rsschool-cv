@@ -91,4 +91,5 @@ a:active {
 .footer_logo {
     display: table-cell;
     float: right;
+    color: transparent;
 }
