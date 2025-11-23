@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vsevolod Timoshenko — CV — RSSchool</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div id="app">
+    <div class="page__wrapper">
+      <header>
+        <div class="header__flex">
+          <a href="/">
+            <h1 class="header"><span>#</span> Vsevolod Timoshenko </h1>
+            <p class="header-description"><span>##</span> front-end developer in the making </p>
+          </a>
+          <img id="rakka" src="./newcanvas2.png"
+            alt="rakka from haibane, thank you, my twilight from oekaki-thread, for allowing to use your artwork!">
+        </div>
+        <div class="navigation__flex">
+          <ul class="navigation-ul">
+            <li><a href="https://t.me/domamolchat" target="_blank" rel="noreferrer">telegram: click!</a>
+            </li>
+            <li><a href="https://discordapp.com/users/417539641424478218" target="_blank" rel="noreferrer">discord:
+                click!</a></li>
+          </ul>
+        </div>
+      </header>
+      <main>
+        <nav>
+          <h2><span>#</span> Navigation menu</h2>
+          <ul class="nav-ul">
+            <li><a href="#personal-information">personal information</a></li>
+            <li><a href="#about">about</a></li>
+            <li><a href="#skills">skills</a></li>
+            <li><a href="#code-examples">code examples</a></li>
+            <li><a href="#experience">experience</a></li>
+            <li><a href="#education">education</a></li>
+            <li><a href="#english-level">english level</a></li>
+          </ul>
+        </nav>
+        <section id="personal-information">
+          <h2><span>#</span> Personal information</h2>
+          <p class="header-description"><span>##</span> don't dox me, please! </p>
+          <ul class="section-ul">
+            <li>name: vsevolod</li>
+            <li>age: 24 years</li>
+            <li>languages <small class="iso">(ISO 639-1:2002)</small>: RU, EN, DE</li>
+            <li>location <small class="iso">(ISO 3166-2)</small>: RU-SVE</li>
+            <li>e-mail: <a href="mailto:timosh0307@gmail.com">timosh0307@gmail.com</a></li>
+            <li>github: <a href="https://github.com/shoblinsky" target="_blank" rel="noreferrer">shoblinsky</a>
+            </li>
+          </ul>
+        </section>
+        <section id="about">
+          <h2><span>#</span> About me</h2>
+          <p>Hello! I'm Vsevolod.</p>
+          <p>I've been fascinated by computers and technology ever since I was a kid. Back then, the computer was
+            usually "limited" for me most of the time, and that only made me want to explore it even more!
+          </p>
+          <p>In my early-teenages-free-time, I either messed around with small mods for J2ME games (as much as my
+            skills allowed,
+            of course!), or created custom maps and campaigns in the Warcraft III World Editor</p>
+          <p>But then I went on to study law, obtain Bachelor of Laws, and even started an LLM program.
+            Unfortunately, due to the international situation, my program was essentially shut down, and after a
+            series of events in my life I decided to leave law.</p>
+          <p>It took some time, but I settled on Front-end development learning. I want to become a specialist
+            whose skills
+            are globally in-demand — knowledge and labor aren't limited by national borders and legal orders,
+            isn't it?</p>
+          <p>There is something exciting about the idea that the things building by front-end engineers can be
+            seen and used by anyone in the web-browsers.</p>
+        </section>
+        <section id="skills">
+          <h2><span>#</span> Skills</h2>
+          <p class="header-description"><span>##</span> The list of my practical skills.</p>
+          <ul class="section-ul">
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>JavaScript</li>
+            <li>Git</li>
+            <li>ThreeJS</li>
+            <li>GLSL <small class="iso">(in part that could be used in ThreeJS)</small></li>
+            <li>Web Audio API</li>
+            <li>Vite</li>
+          </ul>
+        </section>
+        <section id="code-examples">
+          <h2><span>#</span> Code examples</h2>
+          <p class="header-description"><span>##</span> every night and every morn some to misery are born
+            <br><cite>Auguries of Innocence</cite>
+          </p>
+          <pre class="code__example"><code>
+  const context = new AudioContext()
+
+  function createNewOscillator(frequency, type, decay) {
+      const tone = context.createOscillator();
+      const volume = new GainNode(context, { gain: 0.25 });
+      const compressor = context.createDynamicsCompressor();
+      const delay = new DelayNode(context, { delayTime: 0.002 });
+
+      tone.frequency.value = frequency + (frequencySlider.value / 10);
+      one.type = typeSelect.value;
+
+      volume.gain.value += parseFloat(volumeSlider.value);
+      volume.gain.exponentialRampToValueAtTime(0.00001, (context.currentTime + decay));
+
+      tone.connect(volume)
+      .connect(delay)
+      .connect(compressor)
+      .connect(context.destination);
+
+      tone.start(context.currentTime);
+      tone.stop(context.currentTime + decay);
+  }
+
+  function play(frequency) {
+      createNewOscillator(frequency, typeSelect.value, decay = 1);
+  }
+              </code></pre>
+        </section>
+        <section id="experience">
+          <h2><span>#</span> Experience</h2>
+          <p>I don't have relevant work experience, only experience from studying and my own private silly things.
+          </p>
+          <p>So, that's my RSSchool deployed tasks</p>
+          <ul class="section-ul">
+            <li><a href="https://shoblinsky.github.io/not-fight-club/" target="_blank" rel="noreferrer">Not
+                fight club - smth like a combats.ru/dwar</a></li>
+            <li><a href="https://rolling-scopes-school.github.io/shoblinsky-JSFE2025Q3/virtual-music-kit/"
+                target="_blank" rel="noreferrer">Virtual
+                Music Kit - Web Audio API practice</a></li>
+            <li><a href="https://rolling-scopes-school.github.io/shoblinsky-JSFE2025Q3/pair-em-up/">Pair-em-up -
+                I didn't make it to the end, but it is what it is</a></li>
+            <li><a href="https://rolling-scopes-school.github.io/shoblinsky-JSFE2025Q3/portfolio/" target="_blank"
+                rel="noreferrer">Portfolio - I turned out to be weaker than pixel-perfect
+                layout</a></li>
+          </ul>
+          <p>Some of the code is stored on my HDD, for example, the practice of "bunding" on Vite and my ThreeJS
+            fun.</p>
+        </section>
+        <section id="education">
+          <h2><span>#</span> Education</h2>
+          <p>My primary degree is Bachelor's Degree of Ural State Law University.</p>
+          <p>I also studied at</p>
+          <ul class="section-ul education__list">
+            <li>Tomsk State University – Digital Law <small class="iso">(qualification program)</small></li>
+            <li>Hexlet – Code Basics (Foundation course)</li>
+            <li>Yandex Academy – Foundation Course</li>
+            <li>Bruno Simon – Three.js Journey</li>
+            <li>Rolling Scopes School - stage0 <small class="iso">(preschool-2025Q2)</small></li>
+            <li>Rolling Scopes School - stage1 <small class="iso">(js-fe-2025Q3)</small></li>
+          </ul>
+        </section>
+        <section id="english-level">
+          <h2><span>#</span> English language</h2>
+          <p class="header-description"><span>##</span> your son is related </p>
+          <p>Last time I would have said "I haven't practiced writing intentionally for a long time, so I'd rate
+            myself between A2 and B1. My
+            comprehension skills are stronger than my listening and writing abilities". </p>
+          <p>Even though I've started reading more texts in English, I still feel awkward when speaking. </br>
+            Also, i have improved my ability to reading English verison of MDN (due to fact that tasks is listed
+            on English)</p>
+        </section>
+      </main>
+    </div>
+  </div>
+  <canvas class="webgl"></canvas>
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>

@@ -1,4 +1,6 @@
-import './styles.css'
+import './style.css'
+import javascriptLogo from './javascript.svg'
+import viteLogo from '/vite.svg'
 import * as THREE from 'three'
 import GUI from 'lil-gui'
 import vertexShader from './shaders/galaxy/vertex.glsl';

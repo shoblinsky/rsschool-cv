@@ -1,0 +1,103 @@
+html {
+  box-sizing: border-box;
+  font-family: "Fira Code", monospace;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: rgb(26, 25, 25);
+  margin: 0;
+}
+
+
+section,
+header,
+nav {
+  border-bottom: 1px solid rgb(45, 43, 43);
+}
+
+a {
+  color: rgb(186, 124, 124);
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+h1 {
+  color: rgb(218, 213, 213);
+  transition: color 0.3s ease-in-out;
+}
+
+a:hover {
+  color: rgb(255, 255, 255);
+}
+
+a:active {
+  color: rgb(182, 182, 101);
+}
+
+cite {
+  font-size: 0.8rem;
+  color: rgb(84, 84, 84)
+}
+
+h1:hover {
+  color: rgb(255, 255, 255);
+}
+
+.page__wrapper {
+  background-color: rgb(6, 6, 6);
+  color: rgb(217, 217, 217);
+  margin: 0 auto;
+  max-width: 660px;
+  padding: 2rem;
+  border: 0.5px rgb(45, 43, 43) solid;
+}
+
+
+.header__flex {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.nav-ul {
+  display: flex;
+  flex-direction: column;
+}
+
+.section-ul,
+.nav-ul {
+  list-style-type: ' - ';
+}
+
+.navigation-ul {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 0;
+}
+
+.header-description {
+  color: rgb(114, 114, 114)
+}
+
+#rakka {
+  max-width: 128px;
+  max-height: 128px;
+  width: auto;
+  height: auto;
+}
+
+.iso {
+  color: rgb(114, 114, 114);
+}
+
+.code__example {
+  border: 1px solid rgb(45, 45, 45);
+  border-radius: 3px;
+  font-style: italic;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
