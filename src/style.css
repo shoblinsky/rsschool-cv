@@ -1,3 +1,13 @@
+canvas.webgl {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  outline: none;
+}
+
 html {
   box-sizing: border-box;
   font-family: "Fira Code", monospace;
@@ -5,7 +15,6 @@ html {
 }
 
 body {
-  background-color: rgb(26, 25, 25);
   margin: 0;
 }
 
@@ -45,7 +54,8 @@ h1:hover {
 }
 
 .page__wrapper {
-  background-color: rgb(6, 6, 6);
+  background-color: rgb(6, 6, 6, 0.7);
+  backdrop-filter: blur(4px);
   color: rgb(217, 217, 217);
   margin: 0 auto;
   max-width: 660px;
